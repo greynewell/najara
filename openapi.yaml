@@ -1,0 +1,242 @@
+openapi: 3.0.1
+info:
+  title: Najara.py
+  description: 'Najara is a serverless Python/Flask based REST API for managing a collection of DND 5e items on AWS.'
+  contact:
+    email: greyshipscode@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about the author
+  url: https://github.com/greynewell
+tags:
+- name: item
+  description: Perform operations on a collection of items
+  externalDocs:
+    description: Find out more
+    url: https://www.dndbeyond.com/magic-items
+paths:
+  /item:
+    get:
+      tags:
+      - item
+      summary: Return a list of 5e items stored in this collection.
+      description: Fetch all items stored in this instance of Najara.
+      operationId: readItems
+      responses:
+        200:
+          description: Success response- the list of all items stored in Najara!
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Collection'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Collection'
+  /item/{id}:
+    post:
+        tags:
+        - item
+        summary: Create an item with the given id.
+        description: Provide the necessary properties of the item and a valid, unused GUID id.
+        operationId: createItem
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Item'
+        parameters:
+        - name: id
+          in: path
+          description: Desired id key of the item in GUID format
+          required: true
+          schema:
+            example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+            type: string
+        responses:
+          200:
+            description: Success response- your item has been created!
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CreateSuccess'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/CreateSuccess'
+          404:
+            description: The given id is in use by another item. Please retry your request with a new id.
+    get:
+      tags:
+      - item
+      summary: Return an item's properties by ID.
+      description: Fetch an item from Najara's database using its id.
+      operationId: readItem
+      parameters:
+      - name: id
+        in: path
+        description: The id key of the desired item in GUID format
+        required: true
+        schema:
+          example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+          type: string
+      responses:
+        200:
+          description: Success response- the properties of your requested item!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Item'
+        404:
+          description: Item not found. No Item could be found for the requested id.
+    put:
+        tags:
+        - item
+        summary: Update an item with the given id.
+        description: Provide the updated properties of the item and a valid GUID id.
+        operationId: updateItem
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Item'
+        parameters:
+        - name: id
+          in: path
+          description: Desired id key of the item in GUID format
+          required: true
+          schema:
+            example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+            type: string
+        responses:
+          200:
+            description: Success response- your item has been updated!
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UpdateSuccess'
+              application/xml:
+                schema:
+                  $ref: '#/components/schemas/UpdateSuccess'
+          404:
+            description: Item not found. No Item could be found for the requested id.
+    delete:
+      tags:
+      - item
+      summary: Delete an item by ID.
+      description: Delete an item from Najara\'s database by using its id.
+      operationId: deleteItem
+      parameters:
+      - name: id
+        in: path
+        description: The id key of the desired item in GUID format
+        required: true
+        schema:
+          example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+          type: string
+      responses:
+        200:
+          description: Success response- your item has been deleted!
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/DeleteSuccess'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/DeleteSuccess'
+        404:
+          description: Item not found. No Item could be found for the requested id.
+components:
+  schemas:
+    Item:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+        name:
+          type: string
+          example: Arrows
+        type:
+          type: string
+          example: Ammunition
+        quantity:
+          type: integer
+          format: int64
+          example: 1
+        weight:
+          minimum: 0
+          type: number
+          format: number
+          example: 0.05
+        gpvalue:
+          minimum: 0
+          type: number
+          format: number
+          example: 0.05
+        description:
+          type: string
+          example: "A regular wooden arrow."
+      xml:
+        name: Item
+    Collection:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: d66e22c7-95d2-49d2-95a2-77220a444411
+              name:
+                type: string
+                example: Arrows
+              description:
+                type: string
+                example: A regular wooden arrow.
+      xml:
+        name: Collection
+    ActionResult:
+      type: object
+      properties:
+        status:
+          type: string
+          example: 'ACTION-STATUS: some-guid-of-requested-item'
+      xml:
+        name: ActionResult
+    CreateSuccess:
+      allOf:
+        - $ref: '#/components/schemas/ActionResult'
+        - type: object
+          properties:
+            status:
+              type: string
+              example: 'CREATE-SUCCESS: d66e22c7-95d2-49d2-95a2-77220a444411'
+    UpdateSuccess:
+      allOf:
+        - $ref: '#/components/schemas/ActionResult'
+        - type: object
+          properties:
+            status:
+              type: string
+              example: 'UPDATE-SUCCESS: d66e22c7-95d2-49d2-95a2-77220a444411'
+    DeleteSuccess:
+      allOf:
+        - $ref: '#/components/schemas/ActionResult'
+        - type: object
+          properties:
+            status:
+              type: string
+              example: 'DELETE-SUCCESS: d66e22c7-95d2-49d2-95a2-77220a444411'
