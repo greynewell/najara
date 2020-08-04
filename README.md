@@ -1,5 +1,5 @@
 # Najara.py
-Najara is a serverless Python/Flask REST API for managing DND 5e items. Najara was created using the AWS Serverless Application Model framework.
+Najara is a serverless Python/Flask REST API for managing Dungeons & Dragons fifth edition items. Najara was created using the AWS Serverless Application Model framework and primarily depends on the Lambda and DynamoDB AWS services.
 
 ## Useful Links
 - API Docs (Coming Soon)
