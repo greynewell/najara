@@ -7,3 +7,5 @@ install:
 # command to run tests
 script:
   - python3 -m pytest tests/ -v
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
