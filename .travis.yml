@@ -6,4 +6,6 @@ install:
   - pip install -r hello_world/requirements.txt
 # command to run tests
 script:
-  - python3 -m pytest tests/ -v
+  - python3 -m pytest --cov tests/ -v
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
