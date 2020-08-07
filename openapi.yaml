@@ -1,115 +1,106 @@
 openapi: 3.0.1
 info:
   title: Najara.py
-  description: 'Najara is a serverless Python/Flask based REST API for managing a collection of DND 5e items on AWS.'
+  description: 'Najara is a serverless Python/Flask based REST API for managing collections of DND 5e items on AWS.'
   contact:
     email: greyshipscode@gmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: 0.0.1
 externalDocs:
   description: Find out more about the author
   url: https://github.com/greynewell
 tags:
 - name: collection
-  description: Create & list collections of items.
+  description: Manage collections of items.
 - name: item
-  description: Perform operations on items in a collection.
-  externalDocs:
-    description: Find out more
-    url: https://www.dndbeyond.com/magic-items
+  description: Manage items in a collection.
 security:
   - BearerAuth: []
 paths:
+  /:
+    get:
+      tags:
+      - collection
+      summary: List all collections.
+      description: Returns an array of all collections contained in Najara.
+      operationId: readCollections
+      responses:
+        200:
+          $ref: '#/components/responses/readCollections'
   /collection:
     post:
       tags:
       - collection
-      summary: Creates a collection.
-      description: Generates a collection for storing items in Najara.
+      summary: Create an empty collection.
+      description: Creates a collection for storing items in Najara. Returns an action result.
       operationId: createCollection
       requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Collection'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Collection'
+        $ref: '#/components/requestBodies/Collection'
       responses:
         200:
-          description: Success response- the list of all item collections in Najara!
-          content:
-            application/json:
-              schema:
-               $ref: '#/components/schemas/CreateSuccess'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/CreateSuccess'
+          $ref: '#/components/responses/createCollectionSuccess'
+  /collection/{collectionGuid}:
     get:
       tags:
       - collection
-      summary: Returns a list of collections.
-      description: Fetch all item collections stored in this instance of Najara.
-      operationId: listCollection
+      summary: Return a collection's metadata and items.
+      description: Returns a collection and the list of items contained by the collection.
+      operationId: readCollection
+      parameters: 
+      - $ref: '#/components/parameters/CollectionGUID'
       responses:
         200:
-          description: Success response- the list of all item collections in Najara!
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CollectionList'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/CollectionList'
-  /item/{collectionGuid}/{itemId}:
-    post:
+          $ref: '#/components/responses/readCollection'
+        404:
+            description: No collection found for given id.
+    patch:
+      tags:
+      - collection
+      summary: Update a collection's metadata.
+      description: Modifies a collection with the fields passed in. Returns an action result.
+      operationId: updateCollection
+      parameters: 
+      - $ref: '#/components/parameters/CollectionGUID'
+      requestBody:
+        $ref: '#/components/requestBodies/Collection'
+      responses:
+        200:
+          $ref: '#/components/responses/updateCollectionSuccess'
+        404:
+            description: No collection found for given id.
+  /item/{collectionGuid}:
+      post:
         tags:
         - item
-        summary: Create an item in the collection with the given id.
-        description: Provide the necessary properties of the item, a valid unused item id and a valid GUID id belonging to a collection.
+        summary: Create an item in a collection.
+        description: Provide the necessary properties of the item and a valid GUID belonging to a collection.
         operationId: createItem
         requestBody:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Item'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Item'
+          $ref: '#/components/requestBodies/Item'
         parameters:
           - $ref: '#/components/parameters/CollectionGUID'
-          - $ref: '#/components/parameters/ItemID'
         responses:
           200:
-            description: Success response- your collection has been created!
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/CreateSuccess'
-              application/xml:
-                schema:
-                  $ref: '#/components/schemas/CreateSuccess'
+            $ref: '#/components/responses/createItemSuccess'
           404:
             description: No collection found for given id.
+  /item/{collectionGuid}/{itemId}:
     get:
       tags:
       - item
-      summary: Return items belonging to a collection.
-      description: Fetch items from 
+      summary: Return an item from a collection.
+      description: Provide a valid collection GUID and integer item id to retrieve the properties of that item.
       operationId: readItem
       parameters:
           - $ref: '#/components/parameters/CollectionGUID'
           - $ref: '#/components/parameters/ItemID'
       responses:
         200:
-          description: Success response- the items of your requested collection!
+          description: Success response- the item from the specified collection!
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Item'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/Item'
         404:
@@ -117,15 +108,12 @@ paths:
     put:
         tags:
         - item
-        summary: Add an item to a collection.
-        description: Provide the properties of the new item and a valid collection GUID.
+        summary: Update an item in a collection.
+        description: Provide a valid collection GUID, the integer itemId, and the new properties of the item.
         operationId: updateItem
         requestBody:
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Item'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/Item'
         parameters:
@@ -133,37 +121,23 @@ paths:
           - $ref: '#/components/parameters/ItemID'
         responses:
           200:
-            description: Success response- your item has been added to the collection!
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/UpdateSuccess'
-              application/xml:
-                schema:
-                  $ref: '#/components/schemas/UpdateSuccess'
+            $ref: '#/components/responses/updateItemSuccess'
           404:
             description: No collection found for the requested id.
     delete:
       tags:
       - item
       summary: Delete an item from a collection.
-      description: Delete an item from a Najara collection using its id.
+      description: Provide a valid collection GUID and the integer itemID to delete the item from its collection.
       operationId: deleteCollectionItem
       parameters:
           - $ref: '#/components/parameters/CollectionGUID'
           - $ref: '#/components/parameters/ItemID'
       responses:
         200:
-          description: Success response- your item has been deleted!
-          content:
-            application/json:
-              schema:
-               $ref: '#/components/schemas/DeleteSuccess'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/DeleteSuccess'
+          $ref: '#/components/responses/deleteItemSuccess'
         404:
-          description: Item not found. No Item could be found for the requested id.
+          description: No collection found for the requested id.
 components:
   securitySchemes:
       BearerAuth:
@@ -188,7 +162,155 @@ components:
         example: 135
         type: integer
         format: int64
-        default: \*
+  responses:
+    createCollectionSuccess:
+      description: Success response- createCollection has succeeded!
+      content:
+        application/json:
+          schema:
+           allOf:
+            - $ref: '#/components/schemas/ActionResult'
+            - type: object
+              properties:
+                action:
+                  type: string
+                  example: 'CREATE'
+                target:
+                  type: string
+                  example: 'COLLECTION'
+                result-id:
+                  type: string
+                  example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+    createItemSuccess:
+      description: Success response- createItem has succeeded!
+      content:
+        application/json:
+          schema:
+           allOf:
+            - $ref: '#/components/schemas/ActionResult'
+            - type: object
+              properties:
+                action:
+                  type: string
+                  example: 'CREATE'
+                result-id:
+                  type: integer
+                  example: 135
+    readCollections:
+      description: Success response- the list of all item collections in Najara!
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              collections:
+                type: array
+                items:
+                   $ref: '#/components/schemas/Collection'
+    readCollection:
+      description: Success response- a collection and all its items!
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              collection:
+                $ref: '#/components/schemas/Collection'
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+    updateCollectionSuccess:
+      description: Success response- your collection has been updated!
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ActionResult'
+              - type: object
+                properties:
+                  action:
+                    type: string
+                    example: 'UPDATE'
+                  target:
+                    type: string
+                    example: COLLECTION
+                  result-id:
+                    type: string
+                    format: GUID
+                    example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+    updateItemSuccess:
+      description: Success response- your item has been updated!
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/ActionResult'
+              - type: object
+                properties:
+                  action:
+                    type: string
+                    example: 'UPDATE'
+                  result-id:
+                    type: integer
+                    example: 135
+    deleteItemSuccess:
+      description: Success response- your item has been deleted!
+      content:
+        application/json:
+          schema:
+           allOf:
+            - $ref: '#/components/schemas/ActionResult'
+            - type: object
+              properties:
+                action:
+                  type: string
+                  example: 'DELETE'
+                result-id:
+                  type: integer
+                  example: 135
+  requestBodies:
+    Collection:
+      content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Nischal's Items
+                  description:
+                    type: string
+                    example: Items carried by gnome monk Nischal in Waterdeep.
+    Item:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Arrows
+              type:
+                type: string
+                example: Ammunition
+              quantity:
+                type: integer
+                format: int64
+                example: 1
+              weight:
+                minimum: 0
+                type: number
+                format: number
+                example: 0.05
+              gpvalue:
+                minimum: 0
+                type: number
+                format: number
+                example: 0.05
+              description:
+                type: string
+                example: "A regular wooden arrow."
   schemas:
     Item:
       type: object
@@ -237,47 +359,21 @@ components:
           example: Items carried by gnome monk Nischal in Waterdeep.
       xml:
         name: Collection
-    CollectionList:
-      type: object
-      properties:
-        collections:
-          type: array
-          items:
-             $ref: '#/components/schemas/Collection'
-      xml:
-        name: CollectionList
     ActionResult:
       type: object
       properties:
-        status:
+        action:
           type: string
-          example: 'ACTION-STATUS: some-guid-of-requested-item'
+          example: 'ACTION'
+        target:
+          type: string
+          example: 'ITEM'
+        success:
+          type: boolean
+          example: true
+        result-id:
+          type: string
+          format: id
       xml:
         name: ActionResult
-    CreateSuccess:
-      allOf:
-        - $ref: '#/components/schemas/ActionResult'
-        - type: object
-          properties:
-            status:
-              type: string
-              example: 'CREATE-SUCCESS'
-            collection:
-              type: string
-              example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
-    UpdateSuccess:
-      allOf:
-        - $ref: '#/components/schemas/ActionResult'
-        - type: object
-          properties:
-            status:
-              type: string
-              example: 'UPDATE-SUCCESS: d66e22c7-95d2-49d2-95a2-77220a444411'
-    DeleteSuccess:
-      allOf:
-        - $ref: '#/components/schemas/ActionResult'
-        - type: object
-          properties:
-            status:
-              type: string
-              example: 'DELETE-SUCCESS: d66e22c7-95d2-49d2-95a2-77220a444411'
+      
