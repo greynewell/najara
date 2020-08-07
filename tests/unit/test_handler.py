@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from readCollections import app
+from source.default import app
 
 
 @pytest.fixture()

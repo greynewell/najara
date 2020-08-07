@@ -11,18 +11,18 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  najaraCreateCollection:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: readCollections/
+      CodeUri: source/
       Handler: app.lambda_handler
       Runtime: python3.7
       Events:
-        readCollections:
+        createCollection:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /
-            Method: get
+            Path: /collection
+            Method: post
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -31,7 +31,7 @@ Outputs:
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
+  najaraCreateCollection:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
   HelloWorldFunctionIamRole:
