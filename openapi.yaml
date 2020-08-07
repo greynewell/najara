@@ -24,12 +24,12 @@ paths:
     get:
       tags:
       - item
-      summary: Return a list of 5e items stored in this collection.
-      description: Fetch all items stored in this instance of Najara.
-      operationId: readItems
+      summary: Returns a list of collections.
+      description: Fetch all item collections stored in this instance of Najara.
+      operationId: listCollections
       responses:
         200:
-          description: Success response- the list of all items stored in Najara!
+          description: Success response- the list of all item collections in Najara!
           content:
             application/json:
               schema:
@@ -41,9 +41,9 @@ paths:
     post:
         tags:
         - item
-        summary: Create an item with the given id.
-        description: Provide the necessary properties of the item and a valid, unused GUID id.
-        operationId: createItem
+        summary: Create an item in the collection with the given id.
+        description: Provide the necessary properties of the item and a valid collection GUID.
+        operationId: createCollection
         requestBody:
           content:
             application/json:
@@ -55,14 +55,14 @@ paths:
         parameters:
         - name: id
           in: path
-          description: Desired id key of the item in GUID format
-          required: true
+          description: GUID id of the collection you'd like to create. Will be generated if not specified.
+          required: false
           schema:
             example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
             type: string
         responses:
           200:
-            description: Success response- your item has been created!
+            description: Success response- your collection has been created!
             content:
               application/json:
                 schema:
@@ -71,24 +71,24 @@ paths:
                 schema:
                   $ref: '#/components/schemas/CreateSuccess'
           404:
-            description: The given id is in use by another item. Please retry your request with a new id.
+            description: No collection found for given id.
     get:
       tags:
       - item
-      summary: Return an item's properties by ID.
-      description: Fetch an item from Najara's database using its id.
-      operationId: readItem
+      summary: Return a list of items belonging to a collection.
+      description: Fetch all items from a Najara collection using its id.
+      operationId: readCollection
       parameters:
       - name: id
         in: path
-        description: The id key of the desired item in GUID format
+        description: The id key of the desired collection in GUID format
         required: true
         schema:
           example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
           type: string
       responses:
         200:
-          description: Success response- the properties of your requested item!
+          description: Success response- the items of your requested collection!
           content:
             application/json:
               schema:
@@ -97,13 +97,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Item'
         404:
-          description: Item not found. No Item could be found for the requested id.
+          description: No collection found for the requested id.
     put:
         tags:
         - item
-        summary: Update an item with the given id.
-        description: Provide the updated properties of the item and a valid GUID id.
-        operationId: updateItem
+        summary: Add an item to a collection.
+        description: Provide the properties of the new item and a valid collection GUID.
+        operationId: updateCollection
         requestBody:
           content:
             application/json:
@@ -115,14 +115,14 @@ paths:
         parameters:
         - name: id
           in: path
-          description: Desired id key of the item in GUID format
+          description: GUID collection id where the item is to be added.
           required: true
           schema:
             example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
             type: string
         responses:
           200:
-            description: Success response- your item has been updated!
+            description: Success response- your item has been added to the collection!
             content:
               application/json:
                 schema:
@@ -131,21 +131,28 @@ paths:
                 schema:
                   $ref: '#/components/schemas/UpdateSuccess'
           404:
-            description: Item not found. No Item could be found for the requested id.
+            description: No collection found for the requested id.
     delete:
       tags:
       - item
-      summary: Delete an item by ID.
-      description: Delete an item from Najara\'s database by using its id.
-      operationId: deleteItem
+      summary: Delete an item from a collection.
+      description: Delete an item from a Najara collection using its id.
+      operationId: deleteCollectionItem
       parameters:
       - name: id
         in: path
-        description: The id key of the desired item in GUID format
+        description: The GUID of the collection to delete the item from
         required: true
         schema:
           example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
           type: string
+      - name: item-id
+        in: path
+        description: The id of the item to delete from the collection
+        required: true
+        schema:
+           example: 135
+           type: integer
       responses:
         200:
           description: Success response- your item has been deleted!
@@ -168,8 +175,9 @@ components:
       type: object
       properties:
         id:
-          type: string
-          example: 'd66e22c7-95d2-49d2-95a2-77220a444411'
+          type: integer
+          format: int64
+          example: 135
         name:
           type: string
           example: Arrows
@@ -198,20 +206,14 @@ components:
     Collection:
       type: object
       properties:
+        id:
+          type: string
+          format: GUID
+          example: d66e22c7-95d2-49d2-95a2-77220a444411
         items:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: d66e22c7-95d2-49d2-95a2-77220a444411
-              name:
-                type: string
-                example: Arrows
-              description:
-                type: string
-                example: A regular wooden arrow.
+             $ref: '#/components/schemas/Item'
       xml:
         name: Collection
     ActionResult:
