@@ -1,10 +1,10 @@
 # Najara - Serverless 5e Item Management
-[![Python Version](https://img.shields.io/github/pipenv/locked/python-version/greynewell/Najara.py)](https://www.python.org/downloads/release/python-370/) 
-[![Chalice](https://img.shields.io/github/pipenv/locked/dependency-version/greynewell/Najara.py/chalice/development)](https://github.com/aws/chalice)
-[![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/Najara.py/blob/master/LICENSE) 
-[![Build Status](https://travis-ci.com/greynewell/Najara.py.svg?branch=master)](https://travis-ci.com/github/greynewell/Najara.py) 
-[![Codecov Test Coverage](https://codecov.io/gh/greynewell/Najara.py/branch/master/graphs/badge.svg?style=flat)](https://codecov.io/gh/greynewell/Najara.py) 
-[![Last Commit](https://img.shields.io/github/last-commit/greynewell/Najara.py/master)](https://github.com/greynewell/Najara.py/commits/master) 
+[![Python Version](https://img.shields.io/github/pipenv/locked/python-version/greynewell/najara)](https://www.python.org/downloads/release/python-370/) 
+[![Chalice](https://img.shields.io/github/pipenv/locked/dependency-version/greynewell/najara/chalice/development)](https://github.com/aws/chalice)
+[![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/najara/blob/master/LICENSE) 
+[![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=master)](https://travis-ci.com/github/greynewell/najara) 
+[![codecov](https://codecov.io/gh/greynewell/najara/branch/master/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
+[![Last Commit](https://img.shields.io/github/last-commit/greynewell/najara/master)](https://github.com/greynewell/Najara.py/commits/master) 
 
 
 
