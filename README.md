@@ -24,11 +24,14 @@ Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](h
 ## Useful Links
 - Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/Najara.py/)
 
-## Development Goals
-In the interest of creating a well-tested and predictable api which was also easy to use with clear setup and helpful instructions:
-- Najara conforms to an [OpenAPI Spec](https://swagger.io/specification/)
+## Development
+Najara was initially written as an [OpenAPI Spec](https://swagger.io/specification/). Development of several candidate solutions proceeded, and the Chalice microframework was selected for Najara due to its testability and ease of use. Najara is built using [Test Driven Development](https://www.agilealliance.org/glossary/tdd/) principles and practices. This software is designed to be easy to develop, operate and maintain.
+
+### Goals
 - Najara preserves 100% test coverage
 - Najara has never had a "broken build"
+- Najara is quick and easy to setup
+- Najara is scalable and highly performant
 
 ### Installing Packages
 In order to add a package to the environment:
