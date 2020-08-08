@@ -3,7 +3,8 @@ python:
   - "3.7"
 # command to install dependencies
 install:
-  - pip install -r hello_world/requirements.txt
+  - pip install pipenv
+  - pipenv install
 # command to run tests
 script:
   - python3 -m pytest --cov tests/ -v
