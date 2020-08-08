@@ -12,8 +12,8 @@
 Najara is a serverless Python/Flask REST API for managing Dungeons & Dragons fifth edition items. Najara was created using the AWS Serverless Application Model framework and primarily depends on the Lambda and DynamoDB AWS services.
 
 ## Getting Started
-1. Install Python 3.7 (or just use [pyenv](https://realpython.com/intro-to-pyenv/)) and clone this repo.
-1. Install dependencies `pip3 install pytest pytest-mock --user`
+1. Clone this repository
+1. Run `sam build`
 1. Run the tests `python3 -m pytest tests/ -v`
 1. Run the API locally `sam local start-api`
 
