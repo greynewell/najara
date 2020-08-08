@@ -26,3 +26,10 @@ Refer to the API Docs for more information on routes, http methods, inputs and o
 
 ## Development
 Najara was initially created by writing an [OpenAPI Spec](https://swagger.io/specification/). This design spec was used to generate initial documentation and to structure the project. Development progresses from this point in a test-driven and iterative manner. The biggest goal of this project is to maintain 100% test coverage.
+
+### Installing Packages
+In order to add a package to the environment:
+- Install the package with pipenv `pipenv install packagename`
+- Update the lock `pipenv lock`
+- Update the lambda layer `pipenv lock -r > dependencies/requirements.txt`
+
