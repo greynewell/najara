@@ -7,6 +7,9 @@ name = 'pypi'
 
 [packages]
 chalice = "*"
+pytest = "*"
+pytest-mock = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.7"

@@ -7,6 +7,6 @@ install:
   - pipenv install
 # command to run tests
 script:
-  - python3 -m pytest --cov tests/ -v
+  - pytest --cov=app test/
 after_success:
   - bash <(curl -s https://codecov.io/bash)
