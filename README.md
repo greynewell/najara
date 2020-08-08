@@ -2,9 +2,9 @@
 [![Python Version](https://img.shields.io/github/pipenv/locked/python-version/greynewell/najara)](https://www.python.org/downloads/release/python-370/) 
 [![Chalice](https://img.shields.io/github/pipenv/locked/dependency-version/greynewell/najara/chalice/development)](https://github.com/aws/chalice)
 [![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/najara/blob/master/LICENSE) 
-[![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=master)](https://travis-ci.com/github/greynewell/najara) 
-[![codecov](https://codecov.io/gh/greynewell/najara/branch/master/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
-[![Last Commit](https://img.shields.io/github/last-commit/greynewell/najara/master)](https://github.com/greynewell/Najara.py/commits/master) 
+[![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=development)](https://travis-ci.com/github/greynewell/najara) 
+[![codecov](https://codecov.io/gh/greynewell/najara/branch/development/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
+[![Last Commit](https://img.shields.io/github/last-commit/greynewell/najara/development)](https://github.com/greynewell/najara/commits/master) 
 
 
 
