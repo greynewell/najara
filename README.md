@@ -25,7 +25,7 @@ Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](h
 - Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/Najara.py/)
 
 ## Development
-Najara was initially written as an [OpenAPI Spec](https://swagger.io/specification/). Development of several candidate solutions proceeded, and the Chalice microframework was selected for Najara due to its testability and ease of use. Najara is built using [Test Driven Development](https://www.agilealliance.org/glossary/tdd/) principles and practices. This software is designed to be easy to develop, operate and maintain.
+Najara was initially written as an [OpenAPI Spec](https://swagger.io/specification/). The Chalice micro-framework was selected due to its testability and devleopment experience. Najara is built using [Test Driven Development](https://www.agilealliance.org/glossary/tdd/) and is designed to be inexpensive to develop, operate and maintain.
 
 ### Goals
 - Najara preserves 100% test coverage
