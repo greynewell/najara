@@ -12,12 +12,11 @@
 Najara is a serverless Python/Flask REST API for managing Dungeons & Dragons fifth edition items. Najara was created using the AWS Serverless Application Model framework and primarily depends on the Lambda and DynamoDB AWS services.
 
 ## Getting Started
-1. [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-1. Clone this repository
+1. [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html) and clone this repository
 1. Install pipenv `pip3 install pipenv`
 1. Install packages & run virtualenv `pipenv install && pipenv shell`
-1. Run `sam build --use-container`
-1. Run the tests `python3 -m pytest tests/ -v`
+1. Build the application with SAM `sam build --use-container`
+1. Test the project `python3 -m pytest --cov tests/ -v`
 1. Run the API locally `sam local start-api`
 
 Refer to the API Docs for more information on routes, http methods, inputs and outputs.
@@ -26,4 +25,4 @@ Refer to the API Docs for more information on routes, http methods, inputs and o
 - [API Docs on GitHub Pages](https://greynewell.github.io/Najara.py/)
 
 ## Development
-Najara was initially created by writing an [OpenAPI Spec](https://swagger.io/specification/). This spec was used to generate initial documentation as well as the scaffolding and structure of the code. Development progresses from this point in a test-driven and iterative manner.
+Najara was initially created by writing an [OpenAPI Spec](https://swagger.io/specification/). This design spec was used to generate initial documentation and to structure the project. Development progresses from this point in a test-driven and iterative manner. The biggest goal of this project is to maintain 100% test coverage.
