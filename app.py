@@ -1,5 +1,5 @@
 from chalice import Chalice
-from actions import collection
+from models import collection
 
 app = Chalice(app_name='najara')
 
