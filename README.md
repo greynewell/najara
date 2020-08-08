@@ -1,4 +1,4 @@
-# Najara.py - Serverless 5e Item Management
+# Najara - Serverless 5e Item Management
 [![Python Version](https://img.shields.io/github/pipenv/locked/python-version/greynewell/Najara.py)](https://www.python.org/downloads/release/python-370/) 
 [![Chalice](https://img.shields.io/github/pipenv/locked/dependency-version/greynewell/Najara.py/chalice/development)](https://github.com/aws/chalice)
 [![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/Najara.py/blob/master/LICENSE) 
