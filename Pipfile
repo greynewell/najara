@@ -5,6 +5,7 @@ name = 'pypi'
 
 [scripts]
 test = "pytest --cov=app test/"
+start = "chalice local"
 
 [dev-packages]
 

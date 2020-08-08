@@ -13,12 +13,11 @@
 Najara is a serverless Python REST API for managing Dungeons & Dragons fifth edition items. Najara was created using the Chalice framework and primarily depends on the Lambda and DynamoDB AWS services.
 
 ## Getting Started
-1. Clone this repository
-1. Install [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html)
+1. Clone this repository & get [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html)
 1. Install dependencies `pipenv install`
 1. Enter the virtualenv `pipenv shell`
 1. Run the tests `pipenv run test`
-1. Run the API locally `chalice local`
+1. Run the API locally `pipenv run start`
 
 Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](https://www.postman.com/), or similar.
 
@@ -26,15 +25,13 @@ Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](h
 - Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/Najara.py/)
 
 ## Development Goals
+In the interest of creating a well-tested and predictable api which was also easy to use with clear setup and helpful instructions:
 - Najara conforms to an [OpenAPI Spec](https://swagger.io/specification/)
 - Najara preserves 100% test coverage
 - Najara has never had a "broken build"
-- Najara is easy to setup and use with helpful instructions
-- Najara is highly performant and scalable proven by repeatable benchmarks
 
 ### Installing Packages
 In order to add a package to the environment:
 - Install the package with pipenv `pipenv install packagename`
 - Update the lock `pipenv lock`
-- Update the requirements.txt `pipenv lock -r > requirements.txt`
 
