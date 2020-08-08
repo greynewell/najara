@@ -6,11 +6,6 @@ name = 'pypi'
 [dev-packages]
 
 [packages]
-flask = "*"
-requests = "*"
-pytest = "*"
-pytest-mock = "*"
-pytest-cov = "*"
 
 [requires]
 python_version = "3.7"
