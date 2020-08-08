@@ -25,3 +25,13 @@ class TestChalice(object):
                                           body='')
         assert response['statusCode'] == 200
         assert json.loads(response['body']) == dict([('action', 'createCollection')])
+
+    def test_createItem(self, gateway_factory):
+        gateway = gateway_factory()
+        response = gateway.handle_request(method='POST',
+                                          path='/item/some-fake-guid',
+                                          headers={},
+                                          body='')
+        assert response['statusCode'] == 200
+        assert json.loads(response['body']) == dict([('collection', 'some-fake-guid')])
+
