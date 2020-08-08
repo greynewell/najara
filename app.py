@@ -3,9 +3,9 @@ from chalice import Chalice
 app = Chalice(app_name='najara')
 
 
-@app.route('/')
-def readCollections():
-    return {'action':'readCollections'}
+#@app.route('/')
+#def readCollections():
+#    return {'action':'readCollections'}
 
 @app.route('/collection', methods=['POST'])
 def createCollection():

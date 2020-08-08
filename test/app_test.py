@@ -17,11 +17,11 @@ def gateway_factory():
 
 class TestChalice(object):
 
-    def test_readCollections(self, gateway_factory):
+    def test_createCollection(self, gateway_factory):
         gateway = gateway_factory()
-        response = gateway.handle_request(method='GET',
-                                          path='/',
+        response = gateway.handle_request(method='POST',
+                                          path='/collection',
                                           headers={},
                                           body='')
         assert response['statusCode'] == 200
-        assert json.loads(response['body']) == dict([('action', 'readCollections')])
+        assert json.loads(response['body']) == dict([('action', 'createCollection')])
