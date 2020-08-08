@@ -11,12 +11,22 @@ Globals:
     Timeout: 3
 
 Resources:
+  najaraDependencies:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: dependencies
+      CompatibleRuntimes:
+        - python3.7
+    Metadata:
+      BuildMethod: python3.7
   najaraCreateCollection:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: source/default
       Handler: app.lambda_handler
       Runtime: python3.7
+      Layers:
+        - !Ref najaraDependencies
       Events:
         createCollection:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
