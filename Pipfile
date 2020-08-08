@@ -3,11 +3,13 @@ url = 'https://pypi.python.org/simple'
 verify_ssl = true
 name = 'pypi'
 
+[scripts]
+test = "pytest --cov=app test/"
+
 [dev-packages]
 
 [packages]
-flask = "*"
-requests = "*"
+chalice = "*"
 pytest = "*"
 pytest-mock = "*"
 pytest-cov = "*"
