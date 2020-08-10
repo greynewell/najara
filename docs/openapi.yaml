@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Najara.py
-  description: 'Najara is a serverless Python/Flask based REST API for managing collections of DND 5e items on AWS.'
+  title: Najara
+  description: 'Najara is a serverless REST API for managing collections of DND 5e items in Python.'
   contact:
     email: greyshipscode@gmail.com
   license:
