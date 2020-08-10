@@ -22,7 +22,7 @@ Najara is a serverless Python REST API for managing Dungeons & Dragons fifth edi
 Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](https://www.postman.com/), or similar.
 
 ## Useful Links
-- Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/Najara.py/)
+- Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/najara/)
 
 ## Development
 Najara was initially written as an [OpenAPI Spec](https://swagger.io/specification/). The Chalice micro-framework was selected due to its testability and devleopment experience. Najara is built using [Test Driven Development](https://www.agilealliance.org/glossary/tdd/) and is designed to be inexpensive to develop, operate and maintain.
