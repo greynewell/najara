@@ -25,7 +25,10 @@ class TestChalice(object):
                                           body='')
         assert response['statusCode'] == 200
         responseBody = json.loads(response['body']) 
-        assert responseBody['action'] == 'createCollection'
+        assert responseBody['action'] == 'CREATE'
+        assert responseBody['target'] == 'COLLECTION'
+        assert responseBody['success'] == True
+        assert len(responseBody['result-id'].split('-')) == 5
 
     def test_createItem(self, gateway_factory):
         gateway = gateway_factory()
