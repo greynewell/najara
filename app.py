@@ -13,6 +13,10 @@ def createCollection():
     data = app.current_request.json_body
     return collection.create(data)
 
+@app.route('/collection/{collectionGuid}', methods=['GET'])
+def readCollection(collectionGuid):
+    return collection.read(collectionGuid)
+
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
     return {'collection': collectionGuid}

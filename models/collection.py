@@ -5,43 +5,40 @@ dynamo = boto3.client("dynamodb")
 target = 'COLLECTION'
 tableName ='NajaraCollections'
 
-#check for table or create it
-try:
-    response = dynamo.describe_table(TableName=tableName)
-except dynamo.exceptions.ResourceNotFoundException:
-    response = dynamo.create_table(
-        AttributeDefinitions=[
-            {
-                'AttributeName': 'id',
-                'AttributeType': 'S'
-            }
-        ],
-        TableName=tableName,
-        KeySchema=[
-            {
-                'AttributeName': 'id',
-                'KeyType': 'HASH'
-            }
-        ],
-        BillingMode='PAY_PER_REQUEST')
-    pass
-
-def getInput(data, key):
-    userInput = "-"
-    if hasattr(data, key):
-        userInput = data[key]
-    return userInput
+#DEVELOPMENT: create table if it doesn't exist
+#try:
+#    response = dynamo.describe_table(TableName=tableName)
+#except dynamo.exceptions.ResourceNotFoundException:
+#    response = dynamo.create_table(
+#        AttributeDefinitions=[
+#            {
+#                'AttributeName': 'id',
+#                'AttributeType': 'S'
+#            }
+#        ],
+#        TableName=tableName,
+#        KeySchema=[
+#            {
+#                'AttributeName': 'id',
+#                'KeyType': 'HASH'
+#            }
+#        ],
+#        BillingMode='PAY_PER_REQUEST')
+#    pass
 
 def create(data):
     action = 'CREATE'
+    
     resultId = str(uuid.uuid4())
+    name = data.get('name', '-')
+    description = data.get('description', '-')
 
     response = dynamo.put_item(
             TableName=tableName,
             Item={
                 'id': { 'S': resultId },
-                'name': { 'S': getInput(data, 'name')},
-                'description': { 'S': getInput(data, 'description')}
+                'name': { 'S': name},
+                'description': { 'S': description}
                 })
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     return {
@@ -50,3 +47,25 @@ def create(data):
             'success':actionSuccess,
             'result-id':resultId
             }
+
+
+def read(guid):
+    response = dynamo.get_item(
+            TableName=tableName,
+            Key={
+                'id': {
+                    'S': guid
+                    }
+                },
+            AttributesToGet=['id', 'name', 'description'],
+            ConsistentRead=False
+        )
+    return {
+            "collection" : {
+                "id": response['Item']['id']['S'],
+                "name": response['Item']['name']['S'],
+                "description": response['Item']['description']['S']
+                },
+            "items": []
+            }
+
