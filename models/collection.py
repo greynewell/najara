@@ -26,7 +26,13 @@ except dynamo.exceptions.ResourceNotFoundException:
         BillingMode='PAY_PER_REQUEST')
     pass
 
-def create():
+def getInput(data, key):
+    userInput = "-"
+    if hasattr(data, key):
+        userInput = data[key]
+    return userInput
+
+def create(data):
     action = 'CREATE'
     resultId = str(uuid.uuid4())
 
@@ -34,8 +40,8 @@ def create():
             TableName=tableName,
             Item={
                 'id': { 'S': resultId },
-                'name': { 'S': 'test name'},
-                'description': { 'S': 'test description'}
+                'name': { 'S': getInput(data, 'name')},
+                'description': { 'S': getInput(data, 'description')}
                 })
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     return {

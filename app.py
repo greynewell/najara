@@ -10,7 +10,8 @@ app = Chalice(app_name='najara')
 
 @app.route('/collection', methods=['POST'])
 def createCollection():
-    return collection.create()
+    data = app.current_request.json_body
+    return collection.create(data)
 
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
