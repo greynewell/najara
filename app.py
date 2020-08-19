@@ -1,5 +1,5 @@
 from chalice import Chalice
-from models import collection
+from models import collection, item
 
 app = Chalice(app_name='najara')
 
@@ -19,7 +19,8 @@ def readCollection(collectionGuid):
 
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
-    return {'collection': collectionGuid}
+    data = app.current_request.json_body
+    return collection.create(data, collectionGuid)
 
 
 # The view function above will return {"hello": "world"}
