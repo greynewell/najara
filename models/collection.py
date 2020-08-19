@@ -1,7 +1,7 @@
 import uuid
 import boto3
 
-dynamo = boto3.client("dynamodb")
+dynamo = boto3.client("dynamodb", region_name='us-east-1')
 target = 'COLLECTION'
 tableName ='NajaraCollections'
 
