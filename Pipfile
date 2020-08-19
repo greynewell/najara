@@ -8,6 +8,7 @@ test = "pytest --cov=. test/"
 start = "chalice local"
 
 [dev-packages]
+moto = "*"
 
 [packages]
 chalice = "*"

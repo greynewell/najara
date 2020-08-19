@@ -1,6 +1,7 @@
 import json
 import pytest
 from app import app
+from moto import mock_dynamodb
 
 
 @pytest.fixture
@@ -16,6 +17,7 @@ def gateway_factory():
 
 
 class TestChalice(object):
+    @mock_dynamodb
     def test_createCollection(self, gateway_factory):
         gateway = gateway_factory()
         
@@ -40,6 +42,8 @@ class TestChalice(object):
         testCollection = json.loads(getResponse['body'])['collection']
         assert testCollection['name'] == 'test'
         assert testCollection['description'] == 'testy'
+
+    @mock_dynamodb
     def test_createItem(self, gateway_factory):
         gateway = gateway_factory()
         response = gateway.handle_request(method='POST',
