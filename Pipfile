@@ -4,16 +4,18 @@ verify_ssl = true
 name = 'pypi'
 
 [scripts]
-test = "pytest --cov=app test/"
+test = "pytest --cov=. test/"
 start = "chalice local"
 
 [dev-packages]
+moto = "*"
 
 [packages]
 chalice = "*"
 pytest = "*"
 pytest-mock = "*"
 pytest-cov = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.7"

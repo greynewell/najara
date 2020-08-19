@@ -1,4 +1,5 @@
 from chalice import Chalice
+from models import collection
 
 app = Chalice(app_name='najara')
 
@@ -9,7 +10,12 @@ app = Chalice(app_name='najara')
 
 @app.route('/collection', methods=['POST'])
 def createCollection():
-    return {'action':'createCollection'}
+    data = app.current_request.json_body
+    return collection.create(data)
+
+@app.route('/collection/{collectionGuid}', methods=['GET'])
+def readCollection(collectionGuid):
+    return collection.read(collectionGuid)
 
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
