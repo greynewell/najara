@@ -22,6 +22,10 @@ def createItem(collectionGuid):
     data = app.current_request.json_body
     return item.create(data, collectionGuid)
 
+@app.route('/item/{collectionGuid}/{itemId}', methods=['GET'])
+def readItem(collectionGuid, itemId):
+    return item.read(collectionGuid, itemId)
+
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
