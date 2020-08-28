@@ -34,9 +34,9 @@ class TestCreateCollection(object):
         assert create_item['statusCode'] == 200
     def test_response_json_formatting(self, response_body_json):
         assert response_body_json['action'] == 'CREATE'
-        assert response_body_json['target'] == 'COLLECTION'
+        assert response_body_json['target'] == 'ITEM'
         assert response_body_json['success'] == True
-        assert len(response_body_json['result-id'].split('-')) == 5
+        assert isinstance(response_body_json['result-id'], int)
     #def test_created_collection_exists(self, get_created_collection):
     #    assert get_created_collection['statusCode'] == 200
     #def test_created_collection_values(self, created_collection):
