@@ -26,8 +26,8 @@ def get_created_item(response_body_json, gateway_factory):
     return response
 
 @pytest.fixture
-def created_collection(get_created_collection):
-    return json.loads(get_created_collection['body'])
+def created_item(get_created_item):
+    return json.loads(get_created_item['body'])
 
 class TestCreateCollection(object):
     def test_response_status_code(self, create_item):
@@ -39,7 +39,11 @@ class TestCreateCollection(object):
         assert isinstance(response_body_json['result-id'], int)
     def test_created_item_exists(self, get_created_item):
         assert get_created_item['statusCode'] == 200
-    def test_created_item_values(self, created_collection):
-        assert created_item['name'] == 'test'
-        assert created_item['description'] == 'testy'
+    def test_created_item_values(self, created_item):
+        assert created_item['name'] == 'Arrow'
+        assert created_item['description'] == 'A regular wooden arrow.'
+        assert created_item['type'] == 'Ammunition'
+        assert created_item['quantity'] == 1
+        assert created_item['weight'] == 0.05
+        assert created_item['gpvalue'] == 0.05
 
