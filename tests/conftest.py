@@ -1,6 +1,5 @@
 import json, pytest, os, boto3
 from moto import mock_dynamodb2
-tableName='NajaraCollections'
 
 
 @pytest.fixture(scope='function')
@@ -25,11 +24,37 @@ def collection(dynamodb):
                 'AttributeType': 'S'
             }
         ],
-        TableName=tableName,
+        TableName='NajaraCollections',
         KeySchema=[
             {
                 'AttributeName': 'id',
                 'KeyType': 'HASH'
+            }
+        ])
+    return response
+
+@pytest.fixture(scope='function')
+def item(dynamodb):
+    response = dynamodb.create_table(
+        AttributeDefinitions=[
+            {
+                'AttributeName': 'id',
+                'AttributeType': 'N'
+            },
+            {
+                'AttributeName': 'collection',
+                'AttributeType': 'S'
+            }
+        ],
+        TableName='NajaraItems',
+        KeySchema=[
+            {
+                'AttributeName': 'id',
+                'KeyType': 'HASH'
+            },
+            {
+                'AttributeName': 'collection',
+                'KeyType': 'RANGE'
             }
         ])
     return response
