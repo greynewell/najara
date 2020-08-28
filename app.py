@@ -20,7 +20,7 @@ def readCollection(collectionGuid):
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
     data = app.current_request.json_body
-    return collection.create(data, collectionGuid)
+    return item.create(data, collectionGuid)
 
 
 # The view function above will return {"hello": "world"}

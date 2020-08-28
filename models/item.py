@@ -1,5 +1,4 @@
-import uuid
-import boto3
+import uuid, boto3, random
 
 dynamo = boto3.client("dynamodb", region_name='us-east-1')
 target = 'ITEM'
@@ -34,10 +33,11 @@ tableName ='NajaraItems'
 #        BillingMode='PAY_PER_REQUEST')
 #    pass
 
-def create(data):
+def create(data, collection):
     action = 'CREATE'
     
-    resultId = str(uuid.uuid4())
+    resultId= random.randint(0, 10000000000000)
+
     name = data.get('name', '-')
     description = data.get('description', '-')
     itemType = data.get('type', 'NotSpecified')
@@ -49,7 +49,8 @@ def create(data):
     response = dynamo.put_item(
             TableName=tableName,
             Item={
-                'id': { 'S': resultId },
+                'id': { 'N': str(resultId) },
+                'collection' : { 'S': collection},
                 'name': { 'S': name},
                 'description': { 'S': description}
                 })
