@@ -24,7 +24,7 @@ def createItem(collectionGuid):
 
 @app.route('/item/{collectionGuid}/{itemId}', methods=['GET'])
 def readItem(collectionGuid, itemId):
-    return item.read(collectionGuid, itemId)
+    return item.read(itemId, collectionGuid)
 
 
 # The view function above will return {"hello": "world"}

@@ -77,9 +77,5 @@ def read(item, collection):
             AttributesToGet=['id', 'name', 'description'],
             ConsistentRead=False
         )
-    return {
-                "id": response['Item']['id']['S'],
-                "name": response['Item']['name']['S'],
-                "description": response['Item']['description']['S']
-            }
+    return response
 
