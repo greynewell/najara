@@ -50,8 +50,12 @@ def create(data, collection):
             TableName=tableName,
             Item={
                 'id': { 'N': str(resultId) },
-                'collection' : { 'S': collection},
+                'collection': { 'S': collection},
                 'name': { 'S': name},
+                'type': { 'S': itemType },
+                'quantity': { 'N': str(quantity) },
+                'weight': { 'N': str(weight) },
+                'gpvalue': { 'N': str(gpvalue) },
                 'description': { 'S': description}
                 })
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
@@ -74,8 +78,17 @@ def read(item, collection):
                     'S': collection
                     }
                 },
-            AttributesToGet=['id', 'name', 'description'],
+            AttributesToGet=['id', 'name', 'type', 'quantity', 'weight', 'gpvalue', 'description'],
             ConsistentRead=False
         )
-    return response
+    item = response['Item']
+    return {
+            'id':item['id']['N'],
+            'name':item['name']['S'],
+            'type':item['type']['S'],
+            'quantity':int(item['quantity']['N']),
+            'weight':float(item['weight']['N']),
+            'gpvalue':float(item['gpvalue']['N']),
+            'description':item['description']['S']
+            }
 
