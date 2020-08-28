@@ -4,7 +4,7 @@ verify_ssl = true
 name = 'pypi'
 
 [scripts]
-test = "pytest --cov=. test/"
+test = "pytest -x --cov=. tests/"
 start = "chalice local"
 
 [dev-packages]
