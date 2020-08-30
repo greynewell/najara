@@ -70,3 +70,33 @@ def gateway_factory(dynamodb, collection):
             config = Config()
         return LocalGateway(app, config)
     return create_gateway
+
+@pytest.fixture
+def create_item(gateway_factory, item):
+    gateway = gateway_factory()
+
+    requestBody = {'name':'Arrow', 'description':'A regular wooden arrow.', 'type': 'Ammunition',
+                    'quantity':1, 'weight':0.05, 'gpvalue':0.05}
+    response = gateway.handle_request(method='POST', path='/item/test-collection-guid-for-item',
+                                    headers={'Content-Type':'application/json'},
+                                    body=json.dumps(requestBody))
+    return response
+
+@pytest.fixture
+def create_response_body_json(create_item):
+    return json.loads(create_item['body'])
+
+@pytest.fixture
+def get_created_item(create_response_body_json, gateway_factory):
+    gateway = gateway_factory()
+    itemID = create_response_body_json['result-id']
+    response = gateway.handle_request(method='GET',
+                                        path='/item/test-collection-guid-for-item/' + str(itemID),
+                                        headers={},
+                                        body='')
+    return response
+
+@pytest.fixture
+def created_item(get_created_item):
+    return json.loads(get_created_item['body'])
+
