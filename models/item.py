@@ -108,13 +108,16 @@ def update(data, item, collection):
         if key.lower() in attributes:
             #add key and data to boto3 dynamo update expression
             expression += key.lower() + "= :" + key + ','
-            values[':'+key]: data[key]
+            typeChar = "N"
+            if isinstance(data[key], str):
+                typeChar = "S"
+            values[':'+key] = {typeChar:str(data[key])}
 
     response = dynamo.update_item(
         TableName=tableName,
         Key=itemKey,
         UpdateExpression=expression[:-1],
-        AttributeUpdates=values
+        ExpressionAttributeValues=values
     )
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     
