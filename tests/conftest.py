@@ -100,3 +100,10 @@ def get_created_item(create_response_body_json, gateway_factory):
 def created_item(get_created_item):
     return json.loads(get_created_item['body'])
 
+@pytest.fixture
+def create_collection(gateway_factory, collection):
+    gateway = gateway_factory()
+    response = gateway.handle_request(method='POST', path='/collection',
+                                    headers={'Content-Type':'application/json'},
+                                    body='{"name":"test", "description":"testy"}')
+    return response
