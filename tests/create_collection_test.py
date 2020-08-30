@@ -1,16 +1,6 @@
 import json, pytest
 
 @pytest.fixture
-def create_collection(gateway_factory, collection):
-    gateway = gateway_factory()
-
-    requestBody = {'name':'test', 'description':'testy'}
-    response = gateway.handle_request(method='POST', path='/collection',
-                                    headers={'Content-Type':'application/json'},
-                                    body='{"name":"test", "description":"testy"}')
-    return response
-
-@pytest.fixture
 def response_body_json(create_collection):
     return json.loads(create_collection['body'])
 

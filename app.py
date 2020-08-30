@@ -1,12 +1,12 @@
 from chalice import Chalice
-from models import collection, item
+from controllers import collection, item
 
 app = Chalice(app_name='najara')
 
 
-#@app.route('/')
-#def readCollections():
-#    return {'action':'readCollections'}
+@app.route('/')
+def readCollections():
+    return collection.listAll()
 
 @app.route('/collection', methods=['POST'])
 def createCollection():
