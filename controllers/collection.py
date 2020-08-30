@@ -1,5 +1,4 @@
-import uuid
-import boto3
+import uuid, boto3
 
 dynamo = boto3.client("dynamodb", region_name='us-east-1')
 target = 'COLLECTION'
@@ -25,6 +24,20 @@ tableName ='NajaraCollections'
 #        ],
 #        BillingMode='PAY_PER_REQUEST')
 #    pass
+
+def listAll():
+    response = dynamo.scan(
+            TableName=tableName
+    )
+    def unwrap_dynamo_output(text):
+        print(text)
+        text['id'] = text['id']['S']
+        text['name'] = text['name']['S']
+        text['description'] = text['description']['S']
+        return text
+    items = response['Items']
+    unwrapped_items = map(unwrap_dynamo_output, items)
+    return { 'collections': list(unwrapped_items) }
 
 def create(data):
     action = 'CREATE'
