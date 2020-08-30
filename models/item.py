@@ -92,3 +92,5 @@ def read(item, collection):
             'description':item['description']['S']
             }
 
+def update(data, item, collection):
+    return {}

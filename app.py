@@ -26,6 +26,11 @@ def createItem(collectionGuid):
 def readItem(collectionGuid, itemId):
     return item.read(itemId, collectionGuid)
 
+@app.route('/item/{collectionGuid}/{itemId}', methods=['PUT'])
+def updateItem(collectionGuid, itemId):
+    data = app.current_request.json_body
+    return item.update(data, itemId, collectionGuid)
+
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
