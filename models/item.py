@@ -3,6 +3,7 @@ import uuid, boto3, random
 dynamo = boto3.client("dynamodb", region_name='us-east-1')
 target = 'ITEM'
 tableName ='NajaraItems'
+attributes = ['id', 'name', 'type', 'quantity', 'weight', 'gpvalue', 'description']
 
 #DEVELOPMENT: create table if it doesn't exist
 #try:
@@ -78,7 +79,7 @@ def read(item, collection):
                     'S': collection
                     }
                 },
-            AttributesToGet=['id', 'name', 'type', 'quantity', 'weight', 'gpvalue', 'description'],
+            AttributesToGet=attributes,
             ConsistentRead=False
         )
     item = response['Item']
@@ -93,4 +94,33 @@ def read(item, collection):
             }
 
 def update(data, item, collection):
-    return {}
+    action = 'UPDATE'
+    actionSuccess = False
+    expression = "SET "
+    values = {}
+
+    itemKey = {
+            'id': { 'N': str(item) },
+            'collection': { 'S': collection}
+            }
+    
+    for key in data:
+        if key.lower() in attributes:
+            #add key and data to boto3 dynamo update expression
+            expression += key.lower() + "= :" + key + ','
+            values[':'+key]: data[key]
+
+    response = dynamo.update_item(
+        TableName=tableName,
+        Key=itemKey,
+        UpdateExpression=expression[:-1],
+        AttributeUpdates=values
+    )
+    actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
+    
+    return {
+            'action':action,
+            'target':target,
+            'success':actionSuccess,
+            'result-id':item
+            }

@@ -33,11 +33,11 @@ def updated_item(get_updated_item):
 class TestUpdateCollection(object):
     def test_response_status_code(self, update_item):
         assert update_item['statusCode'] == 200
-    def test_response_json_formatting(self, update_response_body_json):
+    def test_response_json_formatting(self, update_response_body_json, created_item):
         assert update_response_body_json['action'] == 'UPDATE'
         assert update_response_body_json['target'] == 'ITEM'
         assert update_response_body_json['success'] == True
-        assert update_response_body_json['result-id'] == id
+        assert update_response_body_json['result-id'] == created_item['id']
     def test_created_item_exists(self, get_updated_item):
         assert get_updated_item['statusCode'] == 200
     def test_created_item_values(self, updated_item):
