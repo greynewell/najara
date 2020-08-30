@@ -1,4 +1,5 @@
 import uuid, boto3, random
+from chalice import NotFoundError
 
 dynamo = boto3.client("dynamodb", region_name='us-east-1')
 target = 'ITEM'
@@ -61,7 +62,7 @@ def create(data, collection):
                 })
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     return {
-            'action':action,
+           'action':action,
             'target':target,
             'success':actionSuccess,
             'result-id':resultId
@@ -82,16 +83,19 @@ def read(item, collection):
             AttributesToGet=attributes,
             ConsistentRead=False
         )
-    item = response['Item']
-    return {
-            'id':item['id']['N'],
-            'name':item['name']['S'],
-            'type':item['type']['S'],
-            'quantity':int(item['quantity']['N']),
-            'weight':float(item['weight']['N']),
-            'gpvalue':float(item['gpvalue']['N']),
-            'description':item['description']['S']
-            }
+    try:
+        item = response['Item']
+        return {
+                'id':item['id']['N'],
+                'name':item['name']['S'],
+                'type':item['type']['S'],
+                'quantity':int(item['quantity']['N']),
+                'weight':float(item['weight']['N']),
+                'gpvalue':float(item['gpvalue']['N']),
+                'description':item['description']['S']
+                }
+    except Exception:
+        raise NotFoundError("The requested item could not be found within the given collection.")
 
 def update(data, item, collection):
     action = 'UPDATE'
@@ -127,3 +131,25 @@ def update(data, item, collection):
             'success':actionSuccess,
             'result-id':item
             }
+
+def delete(item, collection):
+    action = 'DELETE'
+    actionSuccess = False
+    itemKey = {
+            'id': { 'N': str(item) },
+            'collection': { 'S': collection}
+            }
+    
+    response = dynamo.delete_item(
+            TableName=tableName,
+            Key=itemKey
+    )
+    actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
+
+    return {
+            'action':action,
+            'target':target,
+            'success':actionSuccess,
+            'result-id':item
+            }
+
