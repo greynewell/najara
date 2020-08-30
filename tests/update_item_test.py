@@ -29,7 +29,7 @@ def get_updated_item(update_response_body_json, gateway_factory):
 def updated_item(get_updated_item):
     return json.loads(get_updated_item['body'])
 
-class TestUpdateCollection(object):
+class TestUpdateItem(object):
     def test_response_status_code(self, update_item):
         assert update_item['statusCode'] == 200
     def test_response_json_formatting(self, update_response_body_json, created_item):

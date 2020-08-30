@@ -1,4 +1,4 @@
-class TestCreateCollection(object):
+class TestCreateItem(object):
     def test_response_status_code(self, create_item):
         assert create_item['statusCode'] == 200
     def test_response_json_formatting(self, create_response_body_json):

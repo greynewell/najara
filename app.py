@@ -31,6 +31,9 @@ def updateItem(collectionGuid, itemId):
     data = app.current_request.json_body
     return item.update(data, itemId, collectionGuid)
 
+@app.route('/item/{collectionGuid}/{itemId}', methods=['DELETE'])
+def deleteItem(collectionGuid, itemId):
+    return item.delete(itemId, collectionGuid)
 
 # The view function above will return {"hello": "world"}
 # whenever you make an HTTP GET request to '/'.
