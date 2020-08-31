@@ -37,29 +37,9 @@ attributes = ['id', 'name', 'type', 'quantity', 'weight', 'gpvalue', 'descriptio
 
 def create(data, collection):
     action = 'CREATE'
-    
     resultId= random.randint(0, 10000000000000)
-
-    name = data.get('name', '-')
-    description = data.get('description', '-')
-    itemType = data.get('type', 'NotSpecified')
-    quantity = data.get('quantity', 1)
-    weight = data.get('weight', 0)
-    gpvalue = data.get('gpvalue', 0)
-
-
-    response = dynamo.put_item(
-            TableName=tableName,
-            Item={
-                'id': { 'N': str(resultId) },
-                'collection': { 'S': collection},
-                'name': { 'S': name},
-                'type': { 'S': itemType },
-                'quantity': { 'N': str(quantity) },
-                'weight': { 'N': str(weight) },
-                'gpvalue': { 'N': str(gpvalue) },
-                'description': { 'S': description}
-                })
+    
+    response = _put(data, resultId, collection)
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     return {
            'action':action,
@@ -153,3 +133,25 @@ def delete(item, collection):
             'result-id':item
             }
 
+def _put(data, item, collection):
+    name = data.get('name', '-')
+    description = data.get('description', '-')
+    itemType = data.get('type', 'NotSpecified')
+    quantity = data.get('quantity', 1)
+    weight = data.get('weight', 0)
+    gpvalue = data.get('gpvalue', 0)
+
+
+    response = dynamo.put_item(
+            TableName=tableName,
+            Item={
+                'id': { 'N': str(item) },
+                'collection': { 'S': collection},
+                'name': { 'S': name},
+                'type': { 'S': itemType },
+                'quantity': { 'N': str(quantity) },
+                'weight': { 'N': str(weight) },
+                'gpvalue': { 'N': str(gpvalue) },
+                'description': { 'S': description}
+                })
+    return response
