@@ -37,29 +37,9 @@ attributes = ['id', 'name', 'type', 'quantity', 'weight', 'gpvalue', 'descriptio
 
 def create(data, collection):
     action = 'CREATE'
-    
     resultId= random.randint(0, 10000000000000)
-
-    name = data.get('name', '-')
-    description = data.get('description', '-')
-    itemType = data.get('type', 'NotSpecified')
-    quantity = data.get('quantity', 1)
-    weight = data.get('weight', 0)
-    gpvalue = data.get('gpvalue', 0)
-
-
-    response = dynamo.put_item(
-            TableName=tableName,
-            Item={
-                'id': { 'N': str(resultId) },
-                'collection': { 'S': collection},
-                'name': { 'S': name},
-                'type': { 'S': itemType },
-                'quantity': { 'N': str(quantity) },
-                'weight': { 'N': str(weight) },
-                'gpvalue': { 'N': str(gpvalue) },
-                'description': { 'S': description}
-                })
+    
+    response = _put(data, resultId, collection)
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     return {
            'action':action,
@@ -100,29 +80,8 @@ def read(item, collection):
 def update(data, item, collection):
     action = 'UPDATE'
     actionSuccess = False
-    expression = "SET "
-    values = {}
 
-    itemKey = {
-            'id': { 'N': str(item) },
-            'collection': { 'S': collection}
-            }
-    
-    for key in data:
-        if key.lower() in attributes:
-            #add key and data to boto3 dynamo update expression
-            expression += key.lower() + "= :" + key + ','
-            typeChar = "N"
-            if isinstance(data[key], str):
-                typeChar = "S"
-            values[':'+key] = {typeChar:str(data[key])}
-
-    response = dynamo.update_item(
-        TableName=tableName,
-        Key=itemKey,
-        UpdateExpression=expression[:-1],
-        ExpressionAttributeValues=values
-    )
+    response = _put(data, item, collection)
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     
     return {
@@ -153,3 +112,25 @@ def delete(item, collection):
             'result-id':item
             }
 
+def _put(data, item, collection):
+    name = data.get('name', '-')
+    description = data.get('description', '-')
+    itemType = data.get('type', 'NotSpecified')
+    quantity = data.get('quantity', 1)
+    weight = data.get('weight', 0)
+    gpvalue = data.get('gpvalue', 0)
+
+
+    response = dynamo.put_item(
+            TableName=tableName,
+            Item={
+                'id': { 'N': str(item) },
+                'collection': { 'S': collection},
+                'name': { 'S': name},
+                'type': { 'S': itemType },
+                'quantity': { 'N': str(quantity) },
+                'weight': { 'N': str(weight) },
+                'gpvalue': { 'N': str(gpvalue) },
+                'description': { 'S': description}
+                })
+    return response

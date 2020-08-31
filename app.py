@@ -17,6 +17,11 @@ def createCollection():
 def readCollection(collectionGuid):
     return collection.read(collectionGuid)
 
+@app.route('/collection/{collectionGuid}', methods=['PATCH'])
+def updateCollection(collectionGuid):
+    data = app.current_request.json_body
+    return collection.update(data, collectionGuid)
+
 @app.route('/item/{collectionGuid}', methods=['POST'])
 def createItem(collectionGuid):
     data = app.current_request.json_body
