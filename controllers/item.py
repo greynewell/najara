@@ -80,29 +80,8 @@ def read(item, collection):
 def update(data, item, collection):
     action = 'UPDATE'
     actionSuccess = False
-    expression = "SET "
-    values = {}
 
-    itemKey = {
-            'id': { 'N': str(item) },
-            'collection': { 'S': collection}
-            }
-    
-    for key in data:
-        if key.lower() in attributes:
-            #add key and data to boto3 dynamo update expression
-            expression += key.lower() + "= :" + key + ','
-            typeChar = "N"
-            if isinstance(data[key], str):
-                typeChar = "S"
-            values[':'+key] = {typeChar:str(data[key])}
-
-    response = dynamo.update_item(
-        TableName=tableName,
-        Key=itemKey,
-        UpdateExpression=expression[:-1],
-        ExpressionAttributeValues=values
-    )
+    response = _put(data, item, collection)
     actionSuccess = response['ResponseMetadata']['HTTPStatusCode'] == 200
     
     return {
