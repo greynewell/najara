@@ -4,7 +4,6 @@
 [![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/najara/blob/master/LICENSE) 
 [![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=development)](https://travis-ci.com/github/greynewell/najara) 
 [![codecov](https://codecov.io/gh/greynewell/najara/branch/development/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
-[![Last Commit](https://img.shields.io/github/last-commit/greynewell/najara/development)](https://github.com/greynewell/najara/commits/master) 
 
 
 
