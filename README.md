@@ -5,11 +5,13 @@
 [![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=development)](https://travis-ci.com/github/greynewell/najara) 
 [![codecov](https://codecov.io/gh/greynewell/najara/branch/development/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
 
-
-
-
 ### Introduction
 Najara is a serverless Python REST API for managing Dungeons & Dragons fifth edition items. Najara was created using the Chalice framework and primarily depends on the Lambda and DynamoDB AWS services.
+
+## Useful Links
+- [Introduction to Najara](https://github.com/greynewell/najara/wiki/Introduction)
+- [Project Roadmap](https://github.com/greynewell/najara/wiki/Roadmap)
+- [API Docs on GitHub Pages](https://greynewell.github.io/najara/)
 
 ## Getting Started
 1. Clone this repository & get [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html)
@@ -19,9 +21,6 @@ Najara is a serverless Python REST API for managing Dungeons & Dragons fifth edi
 1. Run the API locally `pipenv run start`
 
 Now you can call the API locally with [curl](https://curl.haxx.se/), [postman](https://www.postman.com/), or similar.
-
-## Useful Links
-- Information on routes, http methods, and formatting: [API Docs on GitHub Pages](https://greynewell.github.io/najara/)
 
 ## Development
 Najara was initially written as an [OpenAPI Spec](https://swagger.io/specification/). The Chalice micro-framework was selected due to its testability and devleopment experience. Najara is built using [Test Driven Development](https://www.agilealliance.org/glossary/tdd/) and is designed to be inexpensive to develop, operate and maintain.
