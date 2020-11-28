@@ -2,7 +2,7 @@
 [![Python Version](https://img.shields.io/github/pipenv/locked/python-version/greynewell/najara)](https://www.python.org/downloads/release/python-370/) 
 [![Chalice](https://img.shields.io/github/pipenv/locked/dependency-version/greynewell/najara/chalice/development)](https://github.com/aws/chalice)
 [![GitHub License](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/greynewell/najara/blob/master/LICENSE) 
-[![Build Status](https://travis-ci.com/greynewell/najara.svg?branch=development)](https://travis-ci.com/github/greynewell/najara) 
+[![Build Status](https://travis-ci.com/greyshipscode/najara.svg?branch=development)](https://travis-ci.com/github/greynewell/najara) 
 [![codecov](https://codecov.io/gh/greynewell/najara/branch/development/graph/badge.svg)](https://codecov.io/gh/greynewell/najara)
 
 ### Introduction
